@@ -9,9 +9,9 @@ class DatLich extends StatefulWidget {
 }
 
 class _DatLichState extends State<DatLich> {
+  String? _datetime = DateFormat("dd/MM/yyyy").format(DateTime.now());
   @override
   Widget build(BuildContext context) {
-    String _datetime = DateFormat('dd/MM/yyyy').format(DateTime.now());
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -81,7 +81,18 @@ class _DatLichState extends State<DatLich> {
                     ),
                     SizedBox(width: 1),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        DateTime? _datetime1 = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2024),
+                            lastDate: DateTime(2025));
+                        // print(_datetime1.toString());
+                        setState(() {
+                          _datetime =
+                              DateFormat("dd/MM/yyyy").format(_datetime1!);
+                        });
+                      },
                       icon: Icon(Icons.calendar_month),
                     )
                   ],
