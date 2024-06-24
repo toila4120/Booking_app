@@ -1,3 +1,4 @@
+import 'package:booking_app/widget/buttonTime.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -82,21 +83,34 @@ class _DatLichState extends State<DatLich> {
                     SizedBox(width: 1),
                     IconButton(
                       onPressed: () async {
+                        DateTime _dateTimeNow = DateTime.now();
                         DateTime? _datetime1 = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2024),
-                            lastDate: DateTime(2025));
-                        // print(_datetime1.toString());
-                        setState(() {
-                          _datetime =
-                              DateFormat("dd/MM/yyyy").format(_datetime1!);
-                        });
+                          context: context,
+                          initialDate: _dateTimeNow,
+                          firstDate: _dateTimeNow.subtract(Duration(days: 1)),
+                          lastDate: _dateTimeNow.add(Duration(days: 7)),
+                        );
+                        if (_datetime1 != null) {
+                          setState(() {
+                            _datetime =
+                                DateFormat("dd/MM/yyyy").format(_datetime1);
+                          });
+                        }
                       },
                       icon: Icon(Icons.calendar_month),
-                    )
+                    ),
                   ],
-                )
+                ),
+                SizedBox(height: 0),
+                Text(
+                  "Chọn thời gian",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700),
+                ),
+                // Table(children: [TableRow(children: )],)
+                Buttontime(time: "08:00", color1: Colors.white)
               ],
             ),
           ),
