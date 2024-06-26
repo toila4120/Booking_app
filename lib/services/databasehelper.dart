@@ -69,6 +69,17 @@ class DatabaseHelper {
     return list;
   }
 
+  Future<List<User>?> getUser(String username, String password) async {
+    final db = await database;
+    var res = await db.query("User",
+        where: "username = ? AND password = ?",
+        whereArgs: [username, password]);
+    if (res.isNotEmpty) {
+      return res.map((c) => User.fromMap(c)).toList();
+    }
+    return null;
+  }
+
   // CRUD methods for Booking
   Future<int> insertBooking(Booking booking) async {
     Database db = await instance.database;
