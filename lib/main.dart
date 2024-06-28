@@ -1,30 +1,44 @@
-import 'package:booking_app/models/booking.dart';
-import 'package:booking_app/models/user.dart';
 import 'package:booking_app/screen/login_screen.dart';
 import 'package:booking_app/services/databasehelper.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // Database db = await DatabaseHelper.instance.database;
+  Database db = await DatabaseHelper.instance.database;
 
   // // Thêm một người dùng vào bảng User
-  // User newUser = User(
-  //     username: "user1",
-  //     password: "password1",
-  //     fullName: "User One",
-  //     gender: "Male",
+  // User newUser1 = User(
+  //     username: "tanh1234",
+  //     password: "123",
+  //     fullName: "Nguyễn Tuấn Đạt",
+  //     gender: Constant.GENDER_MALE,
   //     address: "123 Main St",
   //     placeOfBirth: "City A",
   //     dateOfBirth: "2000-01-01",
   //     idCard: "ID123456",
   //     email: "user1@example.com",
   //     phone: "1234567890",
-  //     role: "Student",
+  //     role: Constant.ROLE_TEACHER,
   //     studentCode: "S12345",
-  //     teacherId: "T12345");
+  //     teacherId: "1");
+  // await DatabaseHelper.instance.insertUser(newUser1);
+
+  // User newUser = User(
+  //     username: "tanh123",
+  //     password: "123",
+  //     fullName: "Nguyễn Tiến Anh",
+  //     gender: Constant.GENDER_MALE,
+  //     address: "123 Main St",
+  //     placeOfBirth: "City A",
+  //     dateOfBirth: "2000-01-01",
+  //     idCard: "ID123456",
+  //     email: "user1@example.com",
+  //     phone: "1234567890",
+  //     role: Constant.ROLE_STUDENT,
+  //     studentCode: "S12345",
+  //     teacherId: "1");
   // await DatabaseHelper.instance.insertUser(newUser);
 
   // // Thêm một Booking vào bảng Booking
@@ -39,9 +53,9 @@ void main() async {
 
   // // Truy vấn tất cả các người dùng
   // List<User> users = await DatabaseHelper.instance.getUsers();
-  // print("Users: $users");
+  // users != null ? print("Users: ${users.first.username}") : print("null");
 
-  // // Truy vấn tất cả các Booking
+  // // // Truy vấn tất cả các Booking
   // List<Booking> bookings = await DatabaseHelper.instance.getBookings();
   // print("Bookings: $bookings");
 

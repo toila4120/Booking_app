@@ -3,7 +3,6 @@ import 'package:booking_app/screen/main_screen.dart';
 import 'package:booking_app/services/databasehelper.dart';
 import 'package:booking_app/services/userData.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -95,7 +94,7 @@ class Login extends StatelessWidget {
                 // Kiểm tra thông tin đăng nhập
                 if (users != null && users.isNotEmpty) {
                   // Đăng nhập thành công, chuyển tới màn hình chính
-                  print('hello ${users.first.id}');
+                  // print('hello ${users.first.id}');
                   UserData().user = users.first;
                   Navigator.push(
                     context,

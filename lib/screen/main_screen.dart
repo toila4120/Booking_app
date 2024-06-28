@@ -1,5 +1,6 @@
 import 'package:booking_app/models/user.dart';
 import 'package:booking_app/screen/datLich_screen.dart';
+import 'package:booking_app/screen/detailPersional.dart';
 import 'package:booking_app/screen/lichHen_screen.dart';
 import 'package:booking_app/screen/trang_chu_screen.dart';
 import 'package:booking_app/services/userData.dart';
@@ -40,6 +41,9 @@ class _MainScreenState extends State<MainScreen> {
     }
     if (_selectedPageIndex == 2) {
       activePage = const DatLich();
+    }
+    if (_selectedPageIndex == 4) {
+      activePage = Detailpersional();
     }
     return Scaffold(
       floatingActionButton: SizedBox(
