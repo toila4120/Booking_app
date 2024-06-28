@@ -1,8 +1,14 @@
+import 'package:booking_app/models/user.dart';
 import 'package:booking_app/screen/main_screen.dart';
+import 'package:booking_app/services/databasehelper.dart';
+import 'package:booking_app/services/userData.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  Login({super.key});
+
+  final userName = TextEditingController();
+  final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +43,13 @@ class Login extends StatelessWidget {
               ),
               child: TextFormField(
                 decoration: const InputDecoration(
-                  labelText: "Mã sinh viên",
-                  hintText: "Nhập mã sinh viên",
+                  labelText: "Tài khoản sinh viên",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
+                controller: userName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your student code';
@@ -60,30 +66,51 @@ class Login extends StatelessWidget {
               child: TextFormField(
                 decoration: const InputDecoration(
                   labelText: "Mật khẩu",
-                  hintText: "Nhập mã mật khẩu",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30))),
                 ),
                 keyboardType: TextInputType.text,
+                controller: password,
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your student code';
+                    return 'Please enter your password';
                   }
                   return null;
                 },
               ),
             ),
             const SizedBox(height: 50),
-            // Text('Sai tên đăng nhập hoặc mật khẩu',style: TextStyle(color: Colors.red),)
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                // Lấy giá trị từ TextEditingController
+                String userNameText = userName.text;
+                String passwordText = password.text;
+
+                // Lấy dữ liệu người dùng từ cơ sở dữ liệu
+                List<User>? users = await DatabaseHelper.instance
+                    .getUser(userNameText, passwordText);
+
+                // Kiểm tra thông tin đăng nhập
+                if (users != null && users.isNotEmpty) {
+                  // Đăng nhập thành công, chuyển tới màn hình chính
+                  // print('hello ${users.first.id}');
+                  UserData().user = users.first;
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MainScreen(
-                              index1: 0,
-                            )));
+                      builder: (context) => MainScreen(
+                        index1: 0,
+                      ),
+                    ),
+                  );
+                } else {
+                  // Đăng nhập thất bại, hiển thị thông báo lỗi
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Sai tên đăng nhập hoặc mật khẩu')),
+                  );
+                }
               },
               child: const Text('Đăng nhập'),
             )
