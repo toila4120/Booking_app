@@ -1,6 +1,8 @@
+import 'package:booking_app/models/user.dart';
 import 'package:booking_app/screen/datLich_screen.dart';
 import 'package:booking_app/screen/lichHen_screen.dart';
 import 'package:booking_app/screen/trang_chu_screen.dart';
+import 'package:booking_app/services/userData.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -13,6 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedPageIndex = 0;
+  User? user = UserData().user!;
 
   @override
   void initState() {
@@ -54,8 +57,8 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: const Text(
-          'Hi, Nguyễn Thị Huyền Trang',
+        title: Text(
+          'Hi, ${user?.fullName}',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
