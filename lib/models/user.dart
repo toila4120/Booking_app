@@ -13,7 +13,7 @@ String userToJson(User data) {
 class User {
   static int _nextId = 1; // Biến tĩnh lưu giá trị ID hiện tại
 
-  int id;
+  int? id;
   String username;
   String password;
   String fullName;
@@ -42,7 +42,7 @@ class User {
     required this.role,
     required this.studentCode,
     required this.teacherId,
-  }) : id = _nextId++; // Tự động gán và tăng giá trị ID
+  }); // Tự động gán và tăng giá trị ID
 
   // Nếu cần, bạn có thể thêm phương thức reset cho _nextId
   static void resetId() {

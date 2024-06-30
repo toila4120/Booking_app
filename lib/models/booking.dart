@@ -13,7 +13,7 @@ String bookingToJson(Booking data) {
 class Booking {
   static int _nextId = 1; // Biến tĩnh lưu giá trị ID hiện tại
 
-  int id;
+  int? id;
   String date;
   String time;
   String content;
@@ -28,7 +28,7 @@ class Booking {
     required this.status,
     required this.rating,
     required this.userId,
-  }) : id = _nextId++; // Tự động gán và tăng giá trị ID
+  }); // Tự động gán và tăng giá trị ID
 
   factory Booking.fromMap(Map<String, dynamic> json) => new Booking(
         date: json["date"],

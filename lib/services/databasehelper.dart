@@ -25,7 +25,7 @@ class DatabaseHelper {
         onCreate: (Database db, int version) async {
       await db.execute('''
       CREATE TABLE User (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
         password TEXT,
         fullName TEXT,
@@ -43,7 +43,7 @@ class DatabaseHelper {
 
       await db.execute('''
       CREATE TABLE Booking (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT,
         time TEXT,
         content TEXT,
@@ -89,6 +89,14 @@ class DatabaseHelper {
   Future<List<Booking>> getBookings() async {
     Database db = await instance.database;
     var res = await db.query("Booking");
+    List<Booking> list =
+        res.isNotEmpty ? res.map((c) => Booking.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  Future<List<Booking>> getTimeBookings(String date) async {
+    Database db = await instance.database;
+    var res = await db.query("Booking", where: "date = ?", whereArgs: [date]);
     List<Booking> list =
         res.isNotEmpty ? res.map((c) => Booking.fromMap(c)).toList() : [];
     return list;
