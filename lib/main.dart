@@ -1,4 +1,5 @@
 // import 'package:booking_app/models/booking.dart';
+import 'package:booking_app/models/booking.dart';
 import 'package:booking_app/screen/login_screen.dart';
 import 'package:booking_app/services/databasehelper.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ void main() async {
 
   // Thêm một Booking vào bảng Booking
   // Booking newBooking = Booking(
-  //     date: "2024-06-30",
+  //     date: "2024-07-02",
   //     time: "09:00",
   //     content: "Meeting12",
   //     status: "Confirmed",

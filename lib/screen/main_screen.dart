@@ -40,9 +40,10 @@ class _MainScreenState extends State<MainScreen> {
       activePage = const LichHen();
     }
     if (_selectedPageIndex == 2) {
-      activePage = const BookingCalendarDemoApp();
+      activePage = const DatLich();
     }
     return Scaffold(
+      // resizeToAvoidBottomInset: true,
       floatingActionButton: SizedBox(
           height: 60,
           width: 60,
@@ -52,7 +53,6 @@ class _MainScreenState extends State<MainScreen> {
               _selectPage(2);
             },
             shape: const CircleBorder(),
-            // child: const Icon(Icons.add),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(

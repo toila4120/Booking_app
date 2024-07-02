@@ -1,10 +1,6 @@
-import 'dart:io';
 import 'package:booking_app/models/booking.dart';
 import 'package:booking_app/services/databasehelper.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 void main() {
   runApp(const MyApp());
@@ -74,7 +70,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
         if (i == index) {
           buttonStates[i] = 2;
           buttonSelect = timeSlots[i];
-          // print(buttonSelect);
         } else if (buttonStates[i] != 0) {
           buttonStates[i] = 1;
         }
@@ -85,8 +80,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         for (int i = 0; i < timeSlots.length; i += 3)
           Row(
@@ -114,7 +107,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               ? Colors.grey
               : trangThai == 2
                   ? Colors.blue
-                  : Colors.redAccent.shade400,
+                  : Colors.white,
         ),
       ),
     );
