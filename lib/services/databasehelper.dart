@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:booking_app/models/user.dart';
-import 'package:booking_app/models/booking.dart';
+import 'package:booking_app/models/User.dart';
+import 'package:booking_app/models/Booking.dart';
 
 class DatabaseHelper {
   DatabaseHelper._();
@@ -78,6 +78,13 @@ class DatabaseHelper {
       return res.map((c) => User.fromMap(c)).toList();
     }
     return null;
+  }
+
+  Future<int?> getUserId(String username) async {
+    final db = await database;
+    var res = await db.query("User",
+        columns: ["id"], where: "username = ?", whereArgs: [username]);
+    return res.first["id"] as int?;
   }
 
   // CRUD methods for Booking

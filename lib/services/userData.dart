@@ -1,4 +1,4 @@
-import 'package:booking_app/models/user.dart';
+import 'package:booking_app/models/User.dart';
 
 class UserData {
   static final UserData _data = UserData._internal();

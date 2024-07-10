@@ -1,5 +1,5 @@
-import 'package:booking_app/screen/datLich_screen.dart';
-import 'package:booking_app/widget/thongBao.dart';
+import 'package:booking_app/screen/DatLichScreen.dart';
+import 'package:booking_app/widget/ThongBao.dart';
 import 'package:flutter/material.dart';
 
 class TrangChu extends StatefulWidget {

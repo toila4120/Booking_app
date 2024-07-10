@@ -1,8 +1,10 @@
-import 'package:booking_app/models/user.dart';
-import 'package:booking_app/screen/main_screen.dart';
-import 'package:booking_app/services/databasehelper.dart';
-import 'package:booking_app/services/userData.dart';
+import 'package:booking_app/models/User.dart';
+import 'package:booking_app/screen/MainScreen.dart';
+import 'package:booking_app/services/DatabaseHelper.dart';
+import 'package:booking_app/services/UserData.dart';
+import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:sqflite/sqflite.dart';
 
 class Login extends StatelessWidget {
@@ -82,31 +84,26 @@ class Login extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
+            // Khởi tạo UserData và gán giá trị user sau khi đăng nhập thành công
             ElevatedButton(
               onPressed: () async {
-                // Lấy giá trị từ TextEditingController
                 String userNameText = userName.text;
                 String passwordText = password.text;
 
-                // Lấy dữ liệu người dùng từ cơ sở dữ liệu
                 List<User>? users = await DatabaseHelper.instance
                     .getUser(userNameText, passwordText);
 
-                // Kiểm tra thông tin đăng nhập
                 if (users != null && users.isNotEmpty) {
-                  // Đăng nhập thành công, chuyển tới màn hình chính
-                  // print('hello ${users.first.id}');
                   UserData().user = users.first;
+                  Provider.of<UserProvider>(context, listen: false)
+                      .setUser(users.first);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainScreen(
-                        index1: 0,
-                      ),
+                      builder: (context) => MainScreen(index1: 0),
                     ),
                   );
                 } else {
-                  // Đăng nhập thất bại, hiển thị thông báo lỗi
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content: Text('Sai tên đăng nhập hoặc mật khẩu')),

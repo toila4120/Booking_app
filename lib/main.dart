@@ -1,8 +1,10 @@
 // import 'package:booking_app/models/booking.dart';
-import 'package:booking_app/models/booking.dart';
+import 'package:booking_app/models/Booking.dart';
 import 'package:booking_app/screen/login_screen.dart';
-import 'package:booking_app/services/databasehelper.dart';
+import 'package:booking_app/services/DatabaseHelper.dart';
+import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() async {
@@ -61,7 +63,16 @@ void main() async {
   // List<Booking> bookings = await DatabaseHelper.instance.getBookings();
   // print("Bookings: $bookings");
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        )
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

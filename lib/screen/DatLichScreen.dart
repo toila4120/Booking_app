@@ -1,7 +1,11 @@
-import 'package:booking_app/models/booking.dart';
-import 'package:booking_app/services/databasehelper.dart';
+import 'package:booking_app/models/Booking.dart';
+import 'package:booking_app/models/User.dart';
+import 'package:booking_app/services/DatabaseHelper.dart';
+import 'package:booking_app/services/UserData.dart';
+import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DatLich extends StatefulWidget {
   const DatLich({super.key});
@@ -11,8 +15,12 @@ class DatLich extends StatefulWidget {
 }
 
 class _DatLichState extends State<DatLich> {
+  // User? user;
   String? _datetime = DateFormat("dd/MM/yyyy").format(DateTime.now());
+  DateTime? _dateTimeNow = DateTime.now();
+  int? _id;
 
+  final _LyDoController = TextEditingController();
   String buttonSelect = '';
   List<String> timeSlots = [
     '08:00',
@@ -34,6 +42,7 @@ class _DatLichState extends State<DatLich> {
   @override
   void initState() {
     super.initState();
+    // user = UserData().user;
     fetchBookings(DateTime.now());
   }
 
@@ -42,15 +51,20 @@ class _DatLichState extends State<DatLich> {
     List<Booking> bookings =
         await DatabaseHelper.instance.getTimeBookings(fmDateTime);
     setState(() {
-      // Reset trạng thái của các nút về trạng thái mặc định
       buttonStates = List.generate(12, (index) => 1);
-      // Cập nhật trạng thái mới từ cơ sở dữ liệu
       for (var booking in bookings) {
         int index = timeSlots.indexOf(booking.time);
         if (index != -1) {
           buttonStates[index] = 0;
         }
       }
+    });
+  }
+
+  Future<void> getID(User user) async {
+    final id = await DatabaseHelper.instance.getUserId(user.username);
+    setState(() {
+      _id = id;
     });
   }
 
@@ -69,9 +83,9 @@ class _DatLichState extends State<DatLich> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
-      resizeToAvoidBottomInset:
-          false, // Đặt là true để giao diện tự động điều chỉnh khi bàn phím xuất hiện
+      resizeToAvoidBottomInset: false,
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -150,6 +164,7 @@ class _DatLichState extends State<DatLich> {
                         );
                         if (_datetime1 != null) {
                           setState(() {
+                            _dateTimeNow = _datetime1;
                             _datetime =
                                 DateFormat("dd/MM/yyyy").format(_datetime1);
                           });
@@ -192,8 +207,38 @@ class _DatLichState extends State<DatLich> {
                     hintText: "Lý do hẹn gặp",
                     labelText: "Lý do",
                   ),
+                  controller: _LyDoController,
                   maxLines: null,
                   minLines: 1,
+                ),
+                SizedBox(height: 16),
+                Center(
+                  child: OutlinedButton(
+                    onPressed: () async {
+                      if (_dateTimeNow != null) {
+                        String fmDateTime =
+                            DateFormat("yyyy-MM-dd").format(_dateTimeNow!);
+                        getID(user!);
+                        print(user.username);
+                        Booking newBooking = Booking(
+                          date: fmDateTime.toString(),
+                          time: buttonSelect.toString(),
+                          content: _LyDoController.text,
+                          status: "Confirmed",
+                          rating: 0,
+                          userId: _id!,
+                        );
+                        await DatabaseHelper.instance.insertBooking(newBooking);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Vui lòng chọn ngày tháng hợp lệ."),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text("Đặt lịch"),
+                  ),
                 ),
               ],
             ),
@@ -209,7 +254,7 @@ class _DatLichState extends State<DatLich> {
       onPressed: trangThai == 1 ? onPressed : null,
       child: Text(text),
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(
+        backgroundColor: MaterialStateProperty.all<Color>(
           trangThai == 0
               ? Colors.grey
               : trangThai == 2
