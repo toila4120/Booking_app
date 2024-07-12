@@ -94,7 +94,6 @@ class Login extends StatelessWidget {
                     .getUser(userNameText, passwordText);
 
                 if (users != null && users.isNotEmpty) {
-                  UserData().user = users.first;
                   Provider.of<UserProvider>(context, listen: false)
                       .setUser(users.first);
                   Navigator.push(
