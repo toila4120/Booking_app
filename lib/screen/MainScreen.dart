@@ -1,10 +1,12 @@
-import 'package:booking_app/models/user.dart';
-import 'package:booking_app/screen/datLich_screen.dart';
-import 'package:booking_app/screen/detailPersional.dart';
-import 'package:booking_app/screen/lichHen_screen.dart';
-import 'package:booking_app/screen/trang_chu_screen.dart';
-import 'package:booking_app/services/userData.dart';
+import 'package:booking_app/models/User.dart';
+import 'package:booking_app/screen/DatLichScreen.dart';
+import 'package:booking_app/screen/DatLichTest.dart';
+import 'package:booking_app/screen/LichHenScreen.dart';
+import 'package:booking_app/screen/TrangChuScreen.dart';
+import 'package:booking_app/services/UserData.dart';
+import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key? key, required this.index1});
@@ -16,12 +18,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedPageIndex = 0;
-  User? user = UserData().user!;
+  // User? user;
 
   @override
   void initState() {
     super.initState();
     _selectedPageIndex = widget.index1;
+    // user = UserData().user;
   }
 
   void _selectPage(int index) {
@@ -32,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     Widget activePage = const TrangChu();
     if (_selectedPageIndex == 0) {
       activePage = const TrangChu();
@@ -41,9 +45,6 @@ class _MainScreenState extends State<MainScreen> {
     }
     if (_selectedPageIndex == 2) {
       activePage = const DatLich();
-    }
-    if (_selectedPageIndex == 4) {
-      activePage = Detailpersional();
     }
     return Scaffold(
       floatingActionButton: SizedBox(
@@ -55,14 +56,13 @@ class _MainScreenState extends State<MainScreen> {
               _selectPage(2);
             },
             shape: const CircleBorder(),
-            // child: const Icon(Icons.add),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text(
-          'Hi, ${user?.fullName}',
+          'Hi, ${user?.fullName ?? ''}',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),

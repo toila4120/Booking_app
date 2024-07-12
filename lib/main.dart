@@ -1,6 +1,10 @@
-import 'package:booking_app/screen/login_screen.dart';
-import 'package:booking_app/services/databasehelper.dart';
+// import 'package:booking_app/models/booking.dart';
+import 'package:booking_app/models/Booking.dart';
+import 'package:booking_app/screen/LoginScreen.dart';
+import 'package:booking_app/services/DatabaseHelper.dart';
+import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() async {
@@ -41,14 +45,14 @@ void main() async {
   //     teacherId: "1");
   // await DatabaseHelper.instance.insertUser(newUser);
 
-  // // Thêm một Booking vào bảng Booking
+  // Thêm một Booking vào bảng Booking
   // Booking newBooking = Booking(
-  //     date: "2024-06-23",
-  //     time: "10:00",
-  //     content: "Meeting",
+  //     date: "2024-07-02",
+  //     time: "09:00",
+  //     content: "Meeting12",
   //     status: "Confirmed",
-  //     rating: 4.5,
-  //     userId: newUser.id);
+  //     rating: 0,
+  //     userId: 2);
   // await DatabaseHelper.instance.insertBooking(newBooking);
 
   // // Truy vấn tất cả các người dùng
@@ -59,7 +63,16 @@ void main() async {
   // List<Booking> bookings = await DatabaseHelper.instance.getBookings();
   // print("Bookings: $bookings");
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        )
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

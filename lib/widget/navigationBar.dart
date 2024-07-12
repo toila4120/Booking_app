@@ -1,4 +1,4 @@
-import 'package:booking_app/screen/main_screen.dart';
+import 'package:booking_app/screen/MainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
