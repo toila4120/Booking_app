@@ -1,13 +1,13 @@
-import 'package:booking_app/models/user.dart';
-import 'package:booking_app/services/userData.dart';
+import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Detailpersional extends StatelessWidget {
-  Detailpersional({super.key});
+  const Detailpersional({super.key});
 
   @override
-  User? user = UserData().user!;
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(

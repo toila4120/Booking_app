@@ -1,8 +1,10 @@
 // import 'package:booking_app/models/booking.dart';
-import 'package:booking_app/models/Booking.dart';
+// import 'package:booking_app/models/Booking.dart';
+// import 'package:booking_app/models/User.dart';
 import 'package:booking_app/screen/LoginScreen.dart';
 import 'package:booking_app/services/DatabaseHelper.dart';
 import 'package:booking_app/services/UserProvider.dart';
+// import 'package:booking_app/services/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -45,12 +47,12 @@ void main() async {
   //     teacherId: "1");
   // await DatabaseHelper.instance.insertUser(newUser);
 
-  // Thêm một Booking vào bảng Booking
+  // // Thêm một Booking vào bảng Booking
   // Booking newBooking = Booking(
-  //     date: "2024-07-02",
+  //     date: "2024-07-12",
   //     time: "09:00",
   //     content: "Meeting12",
-  //     status: "Confirmed",
+  //     status: Constant.ACCEPT,
   //     rating: 0,
   //     userId: 2);
   // await DatabaseHelper.instance.insertBooking(newBooking);

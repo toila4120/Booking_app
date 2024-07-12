@@ -94,12 +94,17 @@ class Login extends StatelessWidget {
                     .getUser(userNameText, passwordText);
 
                 if (users != null && users.isNotEmpty) {
+                  // Đăng nhập thành công, chuyển tới màn hình chính
+                  // print('hello ${users.first.id}');
+                  UserData().user = users.first;
                   Provider.of<UserProvider>(context, listen: false)
                       .setUser(users.first);
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainScreen(index1: 0),
+                      builder: (context) => MainScreen(
+                        index1: 0,
+                      ),
                     ),
                   );
                 } else {

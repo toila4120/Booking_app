@@ -2,7 +2,9 @@ import 'package:booking_app/models/User.dart';
 import 'package:booking_app/screen/DatLichScreen.dart';
 import 'package:booking_app/screen/DatLichTest.dart';
 import 'package:booking_app/screen/LichHenScreen.dart';
+import 'package:booking_app/screen/LoginScreen.dart';
 import 'package:booking_app/screen/TrangChuScreen.dart';
+import 'package:booking_app/screen/detailPersional.dart';
 import 'package:booking_app/services/UserData.dart';
 import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +48,12 @@ class _MainScreenState extends State<MainScreen> {
     if (_selectedPageIndex == 2) {
       activePage = const DatLich();
     }
+    if (_selectedPageIndex == 4) {
+      activePage = Detailpersional();
+    }
+    if (_selectedPageIndex == 5) {
+      activePage = Login();
+    }
     return Scaffold(
       floatingActionButton: SizedBox(
           height: 60,
@@ -59,6 +67,17 @@ class _MainScreenState extends State<MainScreen> {
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Provider.of<UserProvider>(context, listen: false).clearUser();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+              icon: Icon(Icons.logout))
+        ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text(

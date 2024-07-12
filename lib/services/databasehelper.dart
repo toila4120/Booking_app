@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:booking_app/services/constant.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -63,7 +64,7 @@ class DatabaseHelper {
 
   Future<List<User>> getUsers() async {
     Database db = await instance.database;
-    var res = await db.query("User");
+    var res = await db.query("${Constant.TABLE_USER}");
     List<User> list =
         res.isNotEmpty ? res.map((c) => User.fromMap(c)).toList() : [];
     return list;
@@ -72,7 +73,7 @@ class DatabaseHelper {
   Future<List<User>?> getUser(String username, String password) async {
     final db = await database;
     var res = await db.query("User",
-        where: "username = ? AND password = ?",
+        where: "${Constant.USERNAME} = ? AND ${Constant.PASSWORD} = ?",
         whereArgs: [username, password]);
     if (res.isNotEmpty) {
       return res.map((c) => User.fromMap(c)).toList();
@@ -103,7 +104,8 @@ class DatabaseHelper {
 
   Future<List<Booking>> getTimeBookings(String date) async {
     Database db = await instance.database;
-    var res = await db.query("Booking", where: "date = ?", whereArgs: [date]);
+    var res = await db.query("Booking",
+        where: "date = ? AND status = ?", whereArgs: [date, Constant.ACCEPT]);
     List<Booking> list =
         res.isNotEmpty ? res.map((c) => Booking.fromMap(c)).toList() : [];
     return list;

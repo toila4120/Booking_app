@@ -1,8 +1,8 @@
 import 'package:booking_app/models/Booking.dart';
 import 'package:booking_app/models/User.dart';
 import 'package:booking_app/services/DatabaseHelper.dart';
-import 'package:booking_app/services/UserData.dart';
 import 'package:booking_app/services/UserProvider.dart';
+import 'package:booking_app/services/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,6 @@ class DatLich extends StatefulWidget {
 }
 
 class _DatLichState extends State<DatLich> {
-  // User? user;
   String? _datetime = DateFormat("dd/MM/yyyy").format(DateTime.now());
   DateTime? _dateTimeNow = DateTime.now();
   int? _id;
@@ -42,7 +41,6 @@ class _DatLichState extends State<DatLich> {
   @override
   void initState() {
     super.initState();
-    // user = UserData().user;
     fetchBookings(DateTime.now());
   }
 
@@ -218,13 +216,13 @@ class _DatLichState extends State<DatLich> {
                       if (_dateTimeNow != null) {
                         String fmDateTime =
                             DateFormat("yyyy-MM-dd").format(_dateTimeNow!);
-                        getID(user!);
+                        await getID(user!);
                         print(user.username);
                         Booking newBooking = Booking(
                           date: fmDateTime.toString(),
                           time: buttonSelect.toString(),
                           content: _LyDoController.text,
-                          status: "Confirmed",
+                          status: Constant.PENDING,
                           rating: 0,
                           userId: _id!,
                         );
