@@ -1,11 +1,11 @@
-import 'package:booking_app/models/User.dart';
+// import 'package:booking_app/models/User.dart';
 import 'package:booking_app/screen/DatLichScreen.dart';
-import 'package:booking_app/screen/DatLichTest.dart';
+// import 'package:booking_app/screen/DatLichTest.dart';
 import 'package:booking_app/screen/LichHenScreen.dart';
 import 'package:booking_app/screen/LoginScreen.dart';
 import 'package:booking_app/screen/TrangChuScreen.dart';
 import 'package:booking_app/screen/detailPersional.dart';
-import 'package:booking_app/services/UserData.dart';
+// import 'package:booking_app/services/UserData.dart';
 import 'package:booking_app/services/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
       activePage = const DatLich();
     }
     if (_selectedPageIndex == 4) {
-      activePage = Detailpersional();
+      activePage = const Detailpersional();
     }
     if (_selectedPageIndex == 5) {
       activePage = Login();
@@ -76,13 +76,13 @@ class _MainScreenState extends State<MainScreen> {
                   MaterialPageRoute(builder: (context) => Login()),
                 );
               },
-              icon: Icon(Icons.logout))
+              icon: const Icon(Icons.logout))
         ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text(
           'Hi, ${user?.fullName ?? ''}',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: activePage,

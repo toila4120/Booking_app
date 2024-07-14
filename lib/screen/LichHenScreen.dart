@@ -1,3 +1,5 @@
+import 'package:booking_app/models/Booking.dart';
+import 'package:booking_app/services/databasehelper.dart';
 import 'package:booking_app/widget/LichHen.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -12,9 +14,22 @@ class LichHen extends StatefulWidget {
 
 class _LichHenState extends State<LichHen> {
   DateTime today = DateTime.now();
+  String fmDateTime = "";
+  Future<List<Booking>>? bookings;
+
+  @override
+  void initState() {
+    fmDateTime = DateFormat("yyyy-MM-dd").format(today);
+    bookings = DatabaseHelper.instance.getTimeBookings(fmDateTime);
+    super.initState();
+  }
+
   void _onDaySelected(DateTime day, DateTime focus) {
     setState(() {
       today = day;
+      fmDateTime = DateFormat("yyyy-MM-dd").format(today);
+      bookings = DatabaseHelper.instance.getTimeBookings(fmDateTime);
+      // print("hello ${bookings.toString()}");
     });
   }
 
@@ -88,7 +103,31 @@ class _LichHenState extends State<LichHen> {
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      const DetailLichHen(),
+                      FutureBuilder<List<Booking>>(
+                          future: bookings,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.isEmpty) {
+                              return Center(
+                                  child: Text('No bookings available'));
+                            } else {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  final booking = snapshot.data![index];
+                                  return DetailLichHen(booking: booking);
+                                },
+                              );
+                            }
+                          })
                     ],
                   ),
                 ),

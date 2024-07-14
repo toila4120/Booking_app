@@ -64,7 +64,7 @@ class DatabaseHelper {
 
   Future<List<User>> getUsers() async {
     Database db = await instance.database;
-    var res = await db.query("${Constant.TABLE_USER}");
+    var res = await db.query(Constant.TABLE_USER);
     List<User> list =
         res.isNotEmpty ? res.map((c) => User.fromMap(c)).toList() : [];
     return list;

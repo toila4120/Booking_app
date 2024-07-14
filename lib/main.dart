@@ -1,10 +1,9 @@
-// import 'package:booking_app/models/booking.dart';
-// import 'package:booking_app/models/Booking.dart';
+import 'package:booking_app/models/Booking.dart';
 // import 'package:booking_app/models/User.dart';
 import 'package:booking_app/screen/LoginScreen.dart';
 import 'package:booking_app/services/DatabaseHelper.dart';
 import 'package:booking_app/services/UserProvider.dart';
-// import 'package:booking_app/services/constant.dart';
+import 'package:booking_app/services/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +13,7 @@ void main() async {
 
   Database db = await DatabaseHelper.instance.database;
 
-  // // Thêm một người dùng vào bảng User
+  // Thêm một người dùng vào bảng User
   // User newUser1 = User(
   //     username: "tanh1234",
   //     password: "123",
@@ -50,7 +49,7 @@ void main() async {
   // // Thêm một Booking vào bảng Booking
   // Booking newBooking = Booking(
   //     date: "2024-07-12",
-  //     time: "09:00",
+  //     time: "09:30",
   //     content: "Meeting12",
   //     status: Constant.ACCEPT,
   //     rating: 0,

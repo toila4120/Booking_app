@@ -1,8 +1,10 @@
+import 'package:booking_app/models/Booking.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_app/widget/text.dart'; // Đảm bảo rằng bạn có widget CustomText trong đường dẫn này
 
 class DetailLichHen extends StatelessWidget {
-  const DetailLichHen({super.key});
+  const DetailLichHen({super.key, required this.booking});
+  final Booking booking;
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +44,10 @@ class DetailLichHen extends StatelessWidget {
                         size: 16,
                       ),
                       const SizedBox(height: 10),
-                      CustomText(text: '8h30', size: 16),
+                      CustomText(text: booking.time, size: 16),
                       const SizedBox(height: 10),
                       CustomText(
-                        text: 'Đăng ký thực tập doanh nghiệp năm 2024',
+                        text: booking.content,
                         size: 16,
                       ),
                     ],
